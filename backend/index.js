@@ -8,7 +8,9 @@ const PORT = process.env.PORT || 8000;
 
 connectDB();
 
-app.use("/", require("./routes/main"));
+app.use(express.json());
+
+app.use("/api", require("./routes/main"));
 
 app.listen(PORT, () => {
   console.log(`Server started on PORT: ${PORT}`);
