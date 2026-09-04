@@ -2,6 +2,8 @@ const express = require("express");
 const Blog = require("../models/Blog");
 const router = express.Router();
 const { registerUser, authUser } = require("../controllers/userController");
+const { createBlog } = require("../controllers/blogController");
+const { protect, admin } = require("../middlewares/authorization");
 
 router.get("/health", (req, res) => {
   return res.json({ message: "All well" });
@@ -10,24 +12,6 @@ router.get("/health", (req, res) => {
 router.route("/users/signup").post(registerUser);
 router.route("/users/login").post(authUser);
 
-// router.post("/post-blog", async (req, res) => {
-//   try {
-//     console.log(req.body);
-//     const newBlog = new Blog({
-//       author: req.body.author,
-//       title: req.body.title,
-//       body: req.body.body,
-//     });
-
-//     await newBlog.save();
-
-//     return res.status(200);
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: "Failed to create blog",
-//       error: error.message,
-//     });
-//   }
-// });
+router.route("/blogs/create").post(protect, admin, createBlog);
 
 module.exports = router;

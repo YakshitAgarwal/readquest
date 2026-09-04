@@ -2,7 +2,7 @@ import { useState } from "react";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 
-const Modal = () => {
+const Modal = ({ closeModal, setUser }) => {
   const [login, setLogin] = useState(true);
 
   return (
@@ -30,11 +30,11 @@ const Modal = () => {
       <div>
         {login ? (
           <div>
-            <Login />
+            <Login closeModal={closeModal} setUser={setUser} />
           </div>
         ) : (
           <div>
-            <Signup />
+            <Signup closeModal={closeModal} setUser={setUser} />
           </div>
         )}
       </div>

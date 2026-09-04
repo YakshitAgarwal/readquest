@@ -1,11 +1,12 @@
-import { Search, Moon, Sun, X } from "lucide-react";
-import { useState } from "react";
+import { Search, Moon, Sun, X, User } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
 
   const tabs = [
     { name: "Why ReadQuest", route: "/" },
@@ -15,13 +16,21 @@ const Navbar = () => {
     { name: "About", route: "/" },
   ];
 
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+
+    if (userInfo) {
+      setUser(JSON.parse(userInfo));
+    }
+  }, []);
+
   return (
     <>
-      <div className="flex justify-between item-center bg-white p-1 rounded-2xl border-2 border-[#e0e0e0]">
+      <div className="flex justify-between item-center bg-white p-1 rounded-2xl border-2 border-[#e0e0e0] gap-4">
         <div className="flex justify-center items-center pl-5 text-[24px] font-semibold cursor-pointer">
           ReadQuest
         </div>
-        <div className="flex justify-center items-center gap-8">
+        <div className="flex justify-center items-center gap-6">
           {tabs.map((tab) => (
             <Link key={tab.name} to={tab.route}>
               {tab.name}
@@ -40,14 +49,41 @@ const Navbar = () => {
           >
             {darkMode ? <Moon size={24} /> : <Sun size={24} />}
           </button>
-          <button
-            onClick={() => {
-              setShowLogin(true);
-            }}
-            className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
-          >
-            Login
-          </button>
+          {user ? (
+            <button className="flex justify-center items-center border-1 border-[#e0e0e0] rounded-full p-2 cursor-pointer">
+              <User size={24} />
+            </button>
+          ) : (
+            ""
+          )}
+          {user ? (
+            <button
+              onClick={() => {
+                localStorage.removeItem("userInfo");
+                setUser(null);
+              }}
+              className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setShowLogin(true);
+              }}
+              className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
+            >
+              Login
+            </button>
+          )}
+          {user?.isAdmin && (
+            <Link
+              to={"/create-blog"}
+              className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
+            >
+              Create Blog
+            </Link>
+          )}
         </div>
       </div>
       {showLogin && (
@@ -62,7 +98,7 @@ const Navbar = () => {
                 className="border-1 border-[#4b4b4b] rounded-full p-1 cursor-pointer"
               />
             </button>
-            <Modal />
+            <Modal closeModal={() => setShowLogin(false)} setUser={setUser} />
           </div>
         </div>
       )}

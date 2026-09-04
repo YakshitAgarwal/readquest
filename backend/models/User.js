@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
       ref: "Blog",
     },
   ],
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {

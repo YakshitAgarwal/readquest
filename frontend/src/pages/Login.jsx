@@ -1,11 +1,17 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
 
-const Login = () => {
+const Login = ({ closeModal, setUser }) => {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -14,12 +20,30 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    console.log(formData);
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
 
-    // Send formData to your backend here
+      const { data } = await axios.post("/api/users/login", formData, config);
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+
+      setUser(data);
+
+      closeModal();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,9 +87,17 @@ const Login = () => {
 
       <button
         type="submit"
-        className="mt-2 rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800"
+        disabled={loading}
+        className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        Log In
+        {loading ? (
+          <>
+            <LoaderCircle size={20} className="animate-spin" />
+            Logging In...
+          </>
+        ) : (
+          "Log In"
+        )}
       </button>
     </form>
   );
