@@ -2,13 +2,29 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import CreateBlog from "./pages/CreateBlog";
+import AdminRoute from "./components/AdminRoute";
+import BlogPage from "./pages/BlogPage";
+import { useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const userInfo = localStorage.getItem("userInfo");
+
+    return userInfo ? JSON.parse(userInfo) : null;
+  });
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create-blog" element={<CreateBlog />} />
+        <Route path="/" element={<Home user={user} setUser={setUser} />} />
+        <Route
+          path="/create-blog"
+          element={
+            <AdminRoute>
+              <CreateBlog />
+            </AdminRoute>
+          }
+        />
+        <Route path="/blogs/:id" element={<BlogPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

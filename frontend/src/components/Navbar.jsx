@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 
-const Navbar = () => {
+const Navbar = ({ user, setUser }) => {
   const [darkMode, setDarkMode] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
-  const [user, setUser] = useState(null);
 
   const tabs = [
     { name: "Why ReadQuest", route: "/" },
@@ -16,20 +15,15 @@ const Navbar = () => {
     { name: "About", route: "/" },
   ];
 
-  useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-
-    if (userInfo) {
-      setUser(JSON.parse(userInfo));
-    }
-  }, []);
-
   return (
     <>
       <div className="flex justify-between item-center bg-white p-1 rounded-2xl border-2 border-[#e0e0e0] gap-4">
-        <div className="flex justify-center items-center pl-5 text-[24px] font-semibold cursor-pointer">
+        <Link
+          to={"/"}
+          className="flex justify-center items-center pl-5 text-[24px] font-semibold cursor-pointer"
+        >
           ReadQuest
-        </div>
+        </Link>
         <div className="flex justify-center items-center gap-6">
           {tabs.map((tab) => (
             <Link key={tab.name} to={tab.route}>
