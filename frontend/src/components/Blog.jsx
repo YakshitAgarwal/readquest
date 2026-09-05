@@ -1,18 +1,58 @@
 import { Link } from "react-router-dom";
 
-const Blog = ({ blog, user }) => {
-  return (
-    <Link
-      to={`/blogs/${blog._id}`}
-      className="block rounded-2xl border border-gray-200 bg-white p-6 hover:shadow-md"
-    >
+const Blog = ({ blog, user, unlockedBlogs }) => {
+  const isUnlocked = unlockedBlogs.includes(blog._id);
+
+  const canAccess = user?.isAdmin || isUnlocked;
+
+  const blogContent = (
+    <>
       <h1 className="text-2xl font-semibold">{blog.title}</h1>
 
-      <p className="mt-2 text-sm text-gray-500">
-        {new Date(blog.publishDate).toLocaleDateString()}
+      <p className="text-gray-600">
+        {blog.body.slice(0, 100)}
+        {blog.body.length > 100 && "..."}
       </p>
-      {user ? <div>$0.01</div> : <div>Login to unlock</div>}
+
+      <div className="flex justify-between items-center">
+        <p className="text-[20px] text-gray-500">
+          {new Date(blog.publishDate).toLocaleDateString()}
+        </p>
+
+        {user?.isAdmin ? (
+          <span className="text-green-600">Admin Access</span>
+        ) : !user ? (
+          <button
+            onClick={(e) => e.preventDefault()}
+            className="bg-blue-500 p-2 rounded"
+          >
+            Login to unlock
+          </button>
+        ) : isUnlocked ? (
+          <span className="text-green-600 font-medium">Unlocked</span>
+        ) : (
+          <button
+            onClick={(e) => e.preventDefault()}
+            className="bg-blue-500 p-2 rounded cursor-pointer"
+          >
+            $0.05
+          </button>
+        )}
+      </div>
+    </>
+  );
+
+  return canAccess ? (
+    <Link
+      to={`/blogs/${blog._id}`}
+      className="flex flex-col gap-2 rounded-2xl border border-gray-200 bg-white p-6 hover:shadow-md"
+    >
+      {blogContent}
     </Link>
+  ) : (
+    <div className="flex flex-col gap-2 rounded-2xl border border-gray-200 bg-white p-6 opacity-90">
+      {blogContent}
+    </div>
   );
 };
 

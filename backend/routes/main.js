@@ -6,6 +6,7 @@ const {
   createBlog,
   getAllBlogs,
   getBlogById,
+  getUnlockedBlogs,
 } = require("../controllers/blogController");
 const { protect, admin } = require("../middlewares/authorization");
 
@@ -16,8 +17,9 @@ router.get("/health", (req, res) => {
 router.route("/users/signup").post(registerUser);
 router.route("/users/login").post(authUser);
 
-router.route("/blogs/create").post(protect, admin, createBlog);
 router.route("/blogs").get(getAllBlogs);
-router.route("/blogs/:id").get(getBlogById);
+router.route("/blogs/unlocked").get(protect, getUnlockedBlogs);
+router.route("/blogs/create").post(protect, admin, createBlog);
+router.route("/blogs/:id").get(protect, getBlogById);
 
 module.exports = router;

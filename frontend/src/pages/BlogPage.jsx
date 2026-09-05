@@ -9,10 +9,21 @@ const BlogPage = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
   useEffect(() => {
     const getBlog = async () => {
+      if (!user) {
+        setLoading(false);
+        return;
+      }
       try {
-        const { data } = await axios.get(`/api/blogs/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.get(`/api/blogs/${id}`, config);
 
         setBlog(data);
       } catch (error) {

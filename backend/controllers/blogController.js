@@ -20,11 +20,26 @@ const getBlogById = async (req, res) => {
   const blog = await Blog.findById(req.params.id);
 
   if (!blog) {
-    res.status(404);
-    throw new Error("Blog not found");
+    return res.status(404).json({
+      message: "Blog not found",
+    });
   }
 
-  res.status(200).json(blog);
+  if (req.user.isAdmin) {
+    return res.status(200).json(blog);
+  }
+
+  const hasUnlocked = req.user.unlockedBlogs.some(
+    (blogId) => blogId.toString() === blog._id.toString(),
+  );
+
+  if (!hasUnlocked) {
+    return res.status(403).json({
+      message: "You have not unlocked this blog",
+    });
+  }
+
+  return res.status(200).json(blog);
 };
 
 const getAllBlogs = async (req, res) => {
@@ -32,4 +47,19 @@ const getAllBlogs = async (req, res) => {
   res.status(200).json(blogs);
 };
 
-module.exports = { createBlog, getAllBlogs, getBlogById };
+const getUnlockedBlogs = async (req, res) => {
+  try {
+    const unlockedBlogs = req.user.unlockedBlogs.map((blogId) =>
+      blogId.toString(),
+    );
+
+    res.status(200).json(unlockedBlogs);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to get unlocked blogs",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createBlog, getAllBlogs, getBlogById, getUnlockedBlogs };
