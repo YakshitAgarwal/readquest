@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import UnlockButton from "./UnlockButton";
 
-const Blog = ({ blog, user, unlockedBlogs }) => {
+const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs }) => {
   const isUnlocked = unlockedBlogs.includes(blog._id);
 
   const canAccess = user?.isAdmin || isUnlocked;
@@ -31,12 +32,16 @@ const Blog = ({ blog, user, unlockedBlogs }) => {
         ) : isUnlocked ? (
           <span className="text-green-600 font-medium">Unlocked</span>
         ) : (
-          <button
-            onClick={(e) => e.preventDefault()}
-            className="bg-blue-500 p-2 rounded cursor-pointer"
-          >
-            $0.05
-          </button>
+          <UnlockButton
+            blogId={blog._id}
+            user={user}
+            onUnlock={() => {
+              setUnlockedBlogs((previousUnlockedBlogs) => [
+                ...previousUnlockedBlogs,
+                blog._id,
+              ]);
+            }}
+          />
         )}
       </div>
     </>

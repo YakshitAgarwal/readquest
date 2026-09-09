@@ -62,4 +62,38 @@ const getUnlockedBlogs = async (req, res) => {
   }
 };
 
-module.exports = { createBlog, getAllBlogs, getBlogById, getUnlockedBlogs };
+const unlockBlog = async (req, res) => {
+  const blog = await Blog.findById(req.params.id);
+
+  if (!blog) {
+    return res.status(404).json({
+      message: "Blog not found",
+    });
+  }
+
+  const alreadyUnlocked = req.user.unlockedBlogs.some(
+    (blogId) => blogId.toString() === blog._id.toString(),
+  );
+
+  if (alreadyUnlocked) {
+    return res.status(400).json({
+      message: "Blog already unlocked",
+    });
+  }
+
+  req.user.unlockedBlogs.push(blog._id);
+
+  await req.user.save();
+
+  return res.status(200).json({
+    message: "Blog unlocked successfully",
+  });
+};
+
+module.exports = {
+  createBlog,
+  getAllBlogs,
+  getBlogById,
+  getUnlockedBlogs,
+  unlockBlog,
+};

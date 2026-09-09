@@ -62,6 +62,7 @@ const Home = ({ user, setUser }) => {
                 blog={blog}
                 user={user}
                 unlockedBlogs={unlockedBlogs}
+                setUnlockedBlogs={setUnlockedBlogs}
               />
             ))}
           </div>

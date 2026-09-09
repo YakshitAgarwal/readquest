@@ -8,6 +8,7 @@ const BlogPage = () => {
 
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const user = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -27,7 +28,9 @@ const BlogPage = () => {
 
         setBlog(data);
       } catch (error) {
-        console.log(error);
+        console.log(error.response?.data);
+
+        setError(error.response?.data?.message || "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -38,6 +41,10 @@ const BlogPage = () => {
 
   if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
   }
 
   if (!blog) {

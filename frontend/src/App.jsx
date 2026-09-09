@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import CreateBlog from "./pages/CreateBlog";
 import AdminRoute from "./components/AdminRoute";
 import BlogPage from "./pages/BlogPage";
-import { useState } from "react";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -12,10 +13,12 @@ function App() {
 
     return userInfo ? JSON.parse(userInfo) : null;
   });
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home user={user} setUser={setUser} />} />
+
         <Route
           path="/create-blog"
           element={
@@ -24,7 +27,9 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route path="/blogs/:id" element={<BlogPage />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

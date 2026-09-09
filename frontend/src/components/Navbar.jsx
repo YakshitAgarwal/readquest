@@ -1,5 +1,5 @@
 import { Search, Moon, Sun, X, User } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 
@@ -47,6 +47,13 @@ const Navbar = ({ user, setUser }) => {
             <button className="flex justify-center items-center border-1 border-[#e0e0e0] rounded-full p-2 cursor-pointer">
               <User size={24} />
             </button>
+          ) : (
+            ""
+          )}
+          {user ? (
+            <div>
+              <button>Connect Wallet</button>
+            </div>
           ) : (
             ""
           )}
