@@ -51,7 +51,7 @@ const Home = ({ user, setUser }) => {
         <Navbar user={user} setUser={setUser} />
       </div>
 
-      <main className="mx-auto mt-10 w-full px-14">
+      <main className="mx-auto mt-10 w-full px-4">
         {loading ? (
           <p>Loading blogs...</p>
         ) : (

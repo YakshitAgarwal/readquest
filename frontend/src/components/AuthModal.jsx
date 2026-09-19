@@ -2,7 +2,7 @@ import { useState } from "react";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 
-const Modal = ({ closeModal, setUser }) => {
+const AuthModal = ({ closeModal, setUser }) => {
   const [login, setLogin] = useState(true);
 
   return (
@@ -42,4 +42,4 @@ const Modal = ({ closeModal, setUser }) => {
   );
 };
 
-export default Modal;
+export default AuthModal;

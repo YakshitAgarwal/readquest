@@ -1,7 +1,7 @@
 import { Search, Moon, Sun, X, User } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Modal from "../components/Modal";
+import AuthModal from "./AuthModal";
 
 const Navbar = ({ user, setUser }) => {
   const [darkMode, setDarkMode] = useState(true);
@@ -94,7 +94,10 @@ const Navbar = ({ user, setUser }) => {
                 className="border-1 border-[#4b4b4b] rounded-full p-1 cursor-pointer"
               />
             </button>
-            <Modal closeModal={() => setShowLogin(false)} setUser={setUser} />
+            <AuthModal
+              closeModal={() => setShowLogin(false)}
+              setUser={setUser}
+            />
           </div>
         </div>
       )}

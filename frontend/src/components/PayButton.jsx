@@ -5,8 +5,8 @@ import { ExactEvmScheme } from "@x402/evm/exact/client";
 import { createWalletClient, custom } from "viem";
 import { baseSepolia } from "viem/chains";
 
-const UnlockButton = ({ blogId, user, onUnlock }) => {
-  const handleUnlock = async () => {
+const PayButton = ({ blogId, user, onUnlock }) => {
+  const handlePayment = async () => {
     if (!user) {
       alert("Please login first");
       return;
@@ -89,12 +89,13 @@ const UnlockButton = ({ blogId, user, onUnlock }) => {
 
   return (
     <button
-      onClick={handleUnlock}
-      className="bg-blue-500 p-2 rounded text-white cursor-pointer"
+      className="text-white bg-black px-6 py-3 rounded-2xl text-[20px] w-full cursor-pointer"
+      onClick={handlePayment}
     >
-      Unlock for $0.001
+      <p>Pay</p>
+      <p>$0.005</p>
     </button>
   );
 };
 
-export default UnlockButton;
+export default PayButton;

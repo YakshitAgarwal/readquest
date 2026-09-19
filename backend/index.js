@@ -49,7 +49,7 @@ app.use(
         accepts: [
           {
             scheme: "exact",
-            price: "$0.001",
+            price: "$0.005",
             network: "eip155:84532",
             payTo: process.env.WALLET_ADDRESS,
           },
