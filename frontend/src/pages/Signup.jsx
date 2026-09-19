@@ -50,57 +50,59 @@ const Signup = ({ closeModal, setUser }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 mt-6 h-[340px]"
+      className="flex flex-col justify-between mt-6 h-[340px]"
     >
-      <div className="flex flex-col gap-2">
-        <label htmlFor="name" className="text-sm font-medium">
-          Name
-        </label>
+      <div className="flex flex-col justify-center gap-4">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="text-sm font-medium">
+            Name
+          </label>
 
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Enter your name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
-        />
-      </div>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Enter your name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
+          />
+        </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-sm font-medium">
-          Email
-        </label>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-sm font-medium">
+            Email
+          </label>
 
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
-        />
-      </div>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
+          />
+        </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="password" className="text-sm font-medium">
-          Password
-        </label>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password" className="text-sm font-medium">
+            Password
+          </label>
 
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
-        />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
+          />
+        </div>
       </div>
 
       <button

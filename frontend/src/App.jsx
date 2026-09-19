@@ -28,7 +28,10 @@ function App() {
           }
         />
 
-        <Route path="/blogs/:id" element={<BlogPage />} />
+        <Route
+          path="/blogs/:id"
+          element={<BlogPage user={user} setUser={setUser} />}
+        />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

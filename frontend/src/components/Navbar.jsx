@@ -9,10 +9,8 @@ const Navbar = ({ user, setUser }) => {
 
   const tabs = [
     { name: "Why ReadQuest", route: "/" },
-    { name: "Products", route: "/" },
-    { name: "Solutions", route: "/" },
-    { name: "Resources", route: "/" },
-    { name: "About", route: "/" },
+    { name: "Sponsor", route: "/" },
+    { name: "FAQ", route: "/" },
   ];
 
   return (
@@ -26,7 +24,11 @@ const Navbar = ({ user, setUser }) => {
         </Link>
         <div className="flex justify-center items-center gap-6">
           {tabs.map((tab) => (
-            <Link key={tab.name} to={tab.route}>
+            <Link
+              key={tab.name}
+              to={tab.route}
+              className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 hover:after:w-full"
+            >
               {tab.name}
             </Link>
           ))}
@@ -47,13 +49,6 @@ const Navbar = ({ user, setUser }) => {
             <button className="flex justify-center items-center border-1 border-[#e0e0e0] rounded-full p-2 cursor-pointer">
               <User size={24} />
             </button>
-          ) : (
-            ""
-          )}
-          {user ? (
-            <div>
-              <button>Connect Wallet</button>
-            </div>
           ) : (
             ""
           )}

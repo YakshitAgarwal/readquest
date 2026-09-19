@@ -51,11 +51,11 @@ const Home = ({ user, setUser }) => {
         <Navbar user={user} setUser={setUser} />
       </div>
 
-      <main className="mx-auto mt-10 w-full max-w-5xl">
+      <main className="mx-auto mt-10 w-full px-14">
         {loading ? (
           <p>Loading blogs...</p>
         ) : (
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-4 gap-8">
             {blogs.map((blog) => (
               <Blog
                 key={blog._id}
@@ -63,6 +63,7 @@ const Home = ({ user, setUser }) => {
                 user={user}
                 unlockedBlogs={unlockedBlogs}
                 setUnlockedBlogs={setUnlockedBlogs}
+                setUser={setUser}
               />
             ))}
           </div>
