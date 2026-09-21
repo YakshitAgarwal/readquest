@@ -1,6 +1,56 @@
+import axios from "axios";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateTask = ({ user, setUser }) => {
+  const [taskData, setTaskData] = useState({
+    title: "",
+    companyName: "",
+    description: "",
+    formUrl: "",
+    amount: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setTaskData({ ...taskData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const payload = {
+        ...taskData,
+        amount: Number(taskData.amount),
+      };
+
+      const { data } = await axios.post("/api/tasks/create", payload, config);
+
+      localStorage.setItem("taskInfo", JSON.stringify(data));
+
+      alert("Task created successfully");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f9f9] p-6">
       <div className="flex justify-center">
@@ -8,39 +58,56 @@ const CreateTask = ({ user, setUser }) => {
       </div>
       <div className="flex flex-1 items-center justify-center">
         <form
-          //onSubmit={}
+          onSubmit={handleSubmit}
           className="flex w-[600px] flex-col gap-6 rounded-2xl border border-gray-300 bg-white p-8 shadow-sm"
         >
-          <h1 className="text-3xl font-semibold text-center">Create Blog</h1>
+          <h1 className="text-3xl font-semibold text-center">Create Task</h1>
 
           <div className="flex flex-col gap-2">
             <label htmlFor="title" className="text-sm font-medium">
-              Company Name
+              Title
             </label>
 
             <input
               id="title"
               name="title"
               type="text"
-              placeholder="Enter the company name"
-              //value={blogData.title}
-              //onChange={handleChange}
+              placeholder="Enter the title for task"
+              value={taskData.title}
+              onChange={handleChange}
               required
               className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="body" className="text-sm font-medium">
+            <label htmlFor="companyName" className="text-sm font-medium">
+              Company Name
+            </label>
+
+            <input
+              id="companyName"
+              name="companyName"
+              type="text"
+              placeholder="Enter the company name"
+              value={taskData.companyName}
+              onChange={handleChange}
+              required
+              className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label htmlFor="Description" className="text-sm font-medium">
               Description
             </label>
 
             <textarea
-              id="body"
-              name="body"
+              id="description"
+              name="description"
               placeholder="Enter the details for your task"
-              //value={blogData.body}
-              //onChange={handleChange}
+              value={taskData.description}
+              onChange={handleChange}
               required
               rows={4}
               className="resize-y rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
@@ -48,34 +115,34 @@ const CreateTask = ({ user, setUser }) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="title" className="text-sm font-medium">
-              Link
+            <label htmlFor="formUrl" className="text-sm font-medium">
+              Form URL
             </label>
 
             <input
-              id="title"
-              name="title"
-              type="text"
+              id="formUrl"
+              name="formUrl"
+              type="url"
               placeholder="Enter the relevant link for your task"
-              //value={blogData.title}
-              //onChange={handleChange}
+              value={taskData.formUrl}
+              onChange={handleChange}
               required
               className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="title" className="text-sm font-medium">
+            <label htmlFor="amount" className="text-sm font-medium">
               Amount
             </label>
 
             <input
-              id="title"
-              name="title"
-              type="text"
-              placeholder="Enter the amount for sponsor"
-              //value={blogData.title}
-              //onChange={handleChange}
+              id="amount"
+              name="amount"
+              type="number"
+              placeholder="Enter the amount in dollars"
+              value={taskData.amount}
+              onChange={handleChange}
               required
               className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
             />
@@ -83,11 +150,10 @@ const CreateTask = ({ user, setUser }) => {
 
           <button
             type="submit"
-            //disabled={loading}
-            //onClick={handleSubmit}
+            disabled={loading}
             className="rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {/* {loading ? "Creating..." : "Create Blog"} */}
+            {loading ? "Creating..." : "Create Task"}
           </button>
         </form>
       </div>

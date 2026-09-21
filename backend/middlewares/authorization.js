@@ -37,4 +37,13 @@ const admin = (req, res, next) => {
   }
 };
 
-module.exports = { protect, admin };
+const company = (req, res, next) => {
+  if (req.user && req.user.isCompany) {
+    next();
+  } else {
+    res.status(403);
+    throw new Error("Not authorized personnel");
+  }
+};
+
+module.exports = { protect, admin, company };
