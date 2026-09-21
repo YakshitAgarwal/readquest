@@ -2,7 +2,7 @@ const User = require("../models/User");
 const generateToken = require("../config/jwt");
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isCompany } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
@@ -19,6 +19,7 @@ const registerUser = async (req, res) => {
     name,
     email,
     password,
+    isCompany,
   });
 
   if (user) {
@@ -26,6 +27,7 @@ const registerUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isCompany: user.isCompany,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
@@ -46,6 +48,7 @@ const authUser = async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isCompany: user.isCompany,
       token: generateToken(user._id),
       loggedIn: true,
     });

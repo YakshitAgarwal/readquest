@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isCompany: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {

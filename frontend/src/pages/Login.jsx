@@ -49,7 +49,7 @@ const Login = ({ closeModal, setUser }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-between mt-6 h-[340px]"
+      className="flex flex-col justify-between mt-6"
     >
       <div className="flex flex-col justify-center gap-4">
         <div className="flex flex-col gap-2">
@@ -90,7 +90,7 @@ const Login = ({ closeModal, setUser }) => {
       <button
         type="submit"
         disabled={loading}
-        className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? (
           <>

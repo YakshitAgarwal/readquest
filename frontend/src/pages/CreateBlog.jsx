@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const CreateBlog = () => {
+const CreateBlog = ({ user, setUser }) => {
   const [blogData, setBlogData] = useState({
     title: "",
     body: "",
@@ -50,7 +50,7 @@ const CreateBlog = () => {
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f9f9] p-6 gap-10">
       <div className="flex justify-center">
-        <Navbar />
+        <Navbar user={user} setUser={setUser} />
       </div>
 
       <div className="flex flex-1 items-center justify-center">

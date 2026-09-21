@@ -9,7 +9,7 @@ const Navbar = ({ user, setUser }) => {
 
   const tabs = [
     { name: "Why ReadQuest", route: "/" },
-    { name: "Sponsor", route: "/" },
+    { name: "Sponsors", route: "/sponsors" },
     { name: "FAQ", route: "/" },
   ];
 
@@ -18,7 +18,7 @@ const Navbar = ({ user, setUser }) => {
       <div className="flex justify-between item-center bg-white p-1 rounded-2xl border-2 border-[#e0e0e0] gap-4">
         <Link
           to={"/"}
-          className="flex justify-center items-center pl-5 text-[24px] font-semibold cursor-pointer"
+          className="flex justify-center items-center pl-6 pr-2 text-[24px] font-semibold cursor-pointer"
         >
           ReadQuest
         </Link>
@@ -52,6 +52,22 @@ const Navbar = ({ user, setUser }) => {
           ) : (
             ""
           )}
+          {user?.isAdmin && (
+            <Link
+              to={"/create-blog"}
+              className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
+            >
+              Create Blog
+            </Link>
+          )}
+          {user?.isCompany && (
+            <Link
+              to={"/create-task"}
+              className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
+            >
+              Create Task
+            </Link>
+          )}
           {user ? (
             <button
               onClick={() => {
@@ -71,14 +87,6 @@ const Navbar = ({ user, setUser }) => {
             >
               Login
             </button>
-          )}
-          {user?.isAdmin && (
-            <Link
-              to={"/create-blog"}
-              className="bg-black text-white py-2 px-5 text-[18px] rounded-xl cursor-pointer"
-            >
-              Create Blog
-            </Link>
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@ import Blog from "../components/Blog";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Home = ({ user, setUser }) => {
+const UserHome = ({ user, setUser }) => {
   const [blogs, setBlogs] = useState([]);
   const [unlockedBlogs, setUnlockedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,4 +73,4 @@ const Home = ({ user, setUser }) => {
   );
 };
 
-export default Home;
+export default UserHome;

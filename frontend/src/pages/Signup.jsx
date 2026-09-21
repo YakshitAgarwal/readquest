@@ -8,6 +8,7 @@ const Signup = ({ closeModal, setUser }) => {
     name: "",
     email: "",
     password: "",
+    isCompany: false,
   });
 
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,13 @@ const Signup = ({ closeModal, setUser }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleIdentityChange = (isCompany) => {
+    setFormData({
+      ...formData,
+      isCompany,
     });
   };
 
@@ -48,11 +56,8 @@ const Signup = ({ closeModal, setUser }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col justify-between mt-6 h-[340px]"
-    >
-      <div className="flex flex-col justify-center gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-6">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <label htmlFor="name" className="text-sm font-medium">
             Name
@@ -103,12 +108,40 @@ const Signup = ({ closeModal, setUser }) => {
             className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
           />
         </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium">Account type</label>
+
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={!formData.isCompany}
+                onChange={() => handleIdentityChange(false)}
+                className="h-5 w-5 cursor-pointer accent-black"
+              />
+
+              <span className="text-sm">User</span>
+            </label>
+
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.isCompany}
+                onChange={() => handleIdentityChange(true)}
+                className="h-5 w-5 cursor-pointer accent-black"
+              />
+
+              <span className="text-sm">Company</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
+        className="flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? (
           <>
