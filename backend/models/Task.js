@@ -12,6 +12,12 @@ const taskSchema = new mongoose.Schema(
       required: true,
     },
 
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     description: {
       type: String,
       required: true,
@@ -45,6 +51,11 @@ const taskSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true,
+    },
+
+    creationDate: {
+      type: Date,
+      default: Date.now,
     },
   },
   { timestamps: true },

@@ -25,21 +25,14 @@ const createTask = async (req, res) => {
     const task = await Task.create({
       title,
       companyName,
+      company: req.user._id,
       description,
       formUrl,
       amount: amountNumber,
       unlocksAvailable,
     });
 
-    return res.status(201).json({
-      _id: task._id,
-      title: task.title,
-      companyName: task.companyName,
-      description: task.description,
-      formUrl: task.formUrl,
-      amount: task.amount,
-      unlocksAvailable: task.unlocksAvailable,
-    });
+    return res.status(201).json(task);
   } catch (error) {
     console.error("CREATE TASK ERROR:", error);
 
@@ -49,4 +42,20 @@ const createTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask };
+const getTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({
+      company: req.user._id,
+    }).sort({ createdAt: -1 });
+
+    return res.status(200).json(tasks);
+  } catch (error) {
+    console.error("GET TASKS ERROR:", error);
+
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { createTask, getTasks };
