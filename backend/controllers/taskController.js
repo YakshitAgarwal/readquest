@@ -4,9 +4,9 @@ const UNLOCK_PRICE = 0.005;
 
 const createTask = async (req, res) => {
   try {
-    const { title, companyName, description, formUrl, amount } = req.body;
+    const { title, description, formUrl, amount } = req.body;
 
-    if (!title || !companyName || !description || !formUrl || !amount) {
+    if (!title || !description || !formUrl || !amount) {
       return res.status(400).json({
         message: "Please fill all the fields",
       });
@@ -24,7 +24,6 @@ const createTask = async (req, res) => {
 
     const task = await Task.create({
       title,
-      companyName,
       company: req.user._id,
       description,
       formUrl,

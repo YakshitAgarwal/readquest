@@ -7,7 +7,6 @@ import CreateTaskButton from "../components/CreateTaskButton";
 const CreateTask = ({ user, setUser }) => {
   const [taskData, setTaskData] = useState({
     title: "",
-    companyName: "",
     description: "",
     formUrl: "",
     amount: "",
@@ -71,23 +70,6 @@ const CreateTask = ({ user, setUser }) => {
               type="text"
               placeholder="Enter the title for task"
               value={taskData.title}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="companyName" className="text-sm font-medium">
-              Company Name
-            </label>
-
-            <input
-              id="companyName"
-              name="companyName"
-              type="text"
-              placeholder="Enter the company name"
-              value={taskData.companyName}
               onChange={handleChange}
               required
               className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black"

@@ -7,11 +7,6 @@ const taskSchema = new mongoose.Schema(
       required: true,
     },
 
-    companyName: {
-      type: String,
-      required: true,
-    },
-
     company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

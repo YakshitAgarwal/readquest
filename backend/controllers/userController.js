@@ -58,4 +58,18 @@ const authUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, authUser };
+const getCompanyNames = async (req, res) => {
+  try {
+    const companies = await User.find({ isCompany: true }, { name: 1, _id: 1 });
+
+    return res.status(200).json(companies);
+  } catch (error) {
+    console.error("GET COMPANY NAMES ERROR:", error);
+
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { registerUser, authUser, getCompanyNames };

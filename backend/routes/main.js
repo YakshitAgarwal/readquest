@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, authUser } = require("../controllers/userController");
+const {
+  registerUser,
+  authUser,
+  getCompanyNames,
+} = require("../controllers/userController");
 const {
   createBlog,
   getAllBlogs,
@@ -21,6 +25,7 @@ router.get("/health", (req, res) => {
 
 router.route("/users/signup").post(registerUser);
 router.route("/users/login").post(authUser);
+router.route("/companies/names").get(getCompanyNames);
 
 router.route("/blogs").get(getAllBlogs);
 router.route("/blogs/unlocked").get(protect, getUnlockedBlogs);

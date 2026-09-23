@@ -54,7 +54,7 @@ const TaskPage = ({ user, setUser }) => {
       <article className="mx-auto mt-10 rounded-2xl bg-white p-8 w-full">
         <h1 className="text-[68px] font-bold">{task.title}</h1>
 
-        <p className="mt-4 text-[28px] text-gray-500">By {task.companyName}</p>
+        <p className="mt-4 text-[28px] text-gray-500">By {user.name}</p>
 
         <p className="text-[18px] text-gray-400">
           {new Date(task.creationDate).toLocaleDateString()}
