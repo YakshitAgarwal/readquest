@@ -9,7 +9,11 @@ const {
   unlockBlog,
 } = require("../controllers/blogController");
 const { protect, admin, company } = require("../middlewares/authorization");
-const { createTask, getTasks } = require("../controllers/taskController");
+const {
+  createTask,
+  getTasks,
+  getTaskById,
+} = require("../controllers/taskController");
 
 router.get("/health", (req, res) => {
   return res.json({ message: "All well" });
@@ -26,5 +30,6 @@ router.route("/blogs/:id/unlock").post(protect, unlockBlog);
 
 router.route("/tasks/create").post(protect, company, createTask);
 router.route("/tasks").get(protect, company, getTasks);
+router.route("/tasks/:id").get(protect, company, getTaskById);
 
 module.exports = router;

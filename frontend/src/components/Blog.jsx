@@ -18,18 +18,15 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
     <>
       <div className="flex flex-col gap-4">
         <h1 className="text-[44px] leading-[1] font-semibold">{blog.title}</h1>
-
         <p className="text-gray-600 text-[18px]">
           {blog.body.slice(0, 95)}
           {blog.body.length > 95 && "..."}
         </p>
       </div>
-
       <div className="flex justify-between items-center">
         <p className="text-[18px] text-gray-500">
           {new Date(blog.publishDate).toLocaleDateString()}
         </p>
-
         {user?.isAdmin ? (
           <span className="text-green-600">Admin Access</span>
         ) : !user ? (
@@ -61,7 +58,6 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
 
   return (
     <>
-      {/* Blog Card */}
       {canAccess ? (
         <Link
           to={`/blogs/${blog._id}`}
@@ -74,8 +70,6 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
           {blogContent}
         </div>
       )}
-
-      {/* Login Modal */}
       {showLogin && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50">
           <div className="relative w-[400px] rounded-2xl bg-white p-6">
@@ -88,7 +82,6 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
                 className="rounded-full border border-[#4b4b4b] p-1 cursor-pointer"
               />
             </button>
-
             <AuthModal
               closeModal={() => setShowLogin(false)}
               setUser={setUser}
@@ -96,7 +89,6 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
           </div>
         </div>
       )}
-
       {showPayModal && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50">
           <div className="relative w-[400px] rounded-2xl bg-white p-6">
@@ -109,7 +101,6 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
                 className="rounded-full border border-[#4b4b4b] p-1 cursor-pointer"
               />
             </button>
-
             <PayModal
               blogId={blog._id}
               user={user}
@@ -119,7 +110,6 @@ const Blog = ({ blog, user, unlockedBlogs, setUnlockedBlogs, setUser }) => {
                   ...previousUnlockedBlogs,
                   blog._id,
                 ]);
-
                 setShowPayModal(false);
               }}
             />

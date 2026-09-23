@@ -1,4 +1,4 @@
-import { Search, Moon, Sun, X, User } from "lucide-react";
+import { Search, Moon, Sun, X, User, UserStar, Landmark } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthModal from "./AuthModal";
@@ -45,12 +45,16 @@ const Navbar = ({ user, setUser }) => {
           >
             {darkMode ? <Moon size={24} /> : <Sun size={24} />}
           </button>
-          {user ? (
+          {user && (
             <button className="flex justify-center items-center border-1 border-[#e0e0e0] rounded-full p-2 cursor-pointer">
-              <User size={24} />
+              {user.isAdmin ? (
+                <UserStar size={24} />
+              ) : user.isCompany ? (
+                <Landmark size={24} />
+              ) : (
+                <User size={24} />
+              )}
             </button>
-          ) : (
-            ""
           )}
           {user?.isAdmin && (
             <Link

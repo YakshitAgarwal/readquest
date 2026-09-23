@@ -10,6 +10,7 @@ import Sponsors from "./pages/Sponsors";
 import CompanyHome from "./pages/CompanyHome";
 import CreateTask from "./pages/CreateTask";
 import CompanyRoute from "./components/CompanyRoute";
+import TaskPage from "./pages/TaskPage";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -59,6 +60,11 @@ function App() {
         <Route
           path="/blogs/:id"
           element={<BlogPage user={user} setUser={setUser} />}
+        />
+
+        <Route
+          path="/tasks/:id"
+          element={<TaskPage user={user} setUser={setUser} />}
         />
 
         <Route path="*" element={<NotFound />} />

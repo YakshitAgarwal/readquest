@@ -2,6 +2,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CreateTaskButton from "../components/CreateTaskButton";
 
 const CreateTask = ({ user, setUser }) => {
   const [taskData, setTaskData] = useState({
@@ -20,8 +21,7 @@ const CreateTask = ({ user, setUser }) => {
     setTaskData({ ...taskData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
 
     try {
@@ -57,10 +57,7 @@ const CreateTask = ({ user, setUser }) => {
         <Navbar user={user} setUser={setUser} />
       </div>
       <div className="flex flex-1 items-center justify-center">
-        <form
-          onSubmit={handleSubmit}
-          className="flex w-[600px] flex-col gap-6 rounded-2xl border border-gray-300 bg-white p-8 shadow-sm"
-        >
+        <form className="flex w-[600px] flex-col gap-6 rounded-2xl border border-gray-300 bg-white p-8 shadow-sm">
           <h1 className="text-3xl font-semibold text-center">Create Task</h1>
 
           <div className="flex flex-col gap-2">
@@ -148,13 +145,7 @@ const CreateTask = ({ user, setUser }) => {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-xl bg-black px-5 py-3 text-white cursor-pointer hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            {loading ? "Creating..." : "Create Task"}
-          </button>
+          <CreateTaskButton loading={loading} onPaymentSuccess={handleSubmit} />
         </form>
       </div>
     </div>

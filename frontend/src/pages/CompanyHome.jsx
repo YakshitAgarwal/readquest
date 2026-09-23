@@ -39,7 +39,7 @@ const CompanyHome = ({ user, setUser }) => {
         ) : (
           <div className="grid grid-cols-4 gap-8">
             {tasks.map((task) => (
-              <Task task={task} />
+              <Task key={task._id} task={task} />
             ))}
           </div>
         )}
