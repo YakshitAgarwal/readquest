@@ -10,7 +10,7 @@ const Navbar = ({ user, setUser }) => {
   const tabs = [
     { name: "Why ReadQuest", route: "/" },
     { name: "Sponsors", route: "/sponsors" },
-    { name: "FAQ", route: "/" },
+    { name: "FAQ", route: "/faq" },
   ];
 
   return (
