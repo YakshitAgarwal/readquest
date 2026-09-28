@@ -17,6 +17,7 @@ const {
   createTask,
   getTasks,
   getTaskById,
+  getRandomTask,
 } = require("../controllers/taskController");
 
 router.get("/health", (req, res) => {
@@ -35,6 +36,7 @@ router.route("/blogs/:id/unlock").post(protect, unlockBlog);
 
 router.route("/tasks/create").post(protect, company, createTask);
 router.route("/tasks").get(protect, company, getTasks);
+router.route("/tasks/random").get(protect, getRandomTask);
 router.route("/tasks/:id").get(protect, company, getTaskById);
 
 module.exports = router;

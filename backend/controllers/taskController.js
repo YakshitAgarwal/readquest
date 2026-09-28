@@ -1,4 +1,5 @@
 const Task = require("../models/Task");
+const crypto = require("crypto");
 
 const UNLOCK_PRICE = 0.005;
 
@@ -85,4 +86,38 @@ const getTaskById = async (req, res) => {
   }
 };
 
-module.exports = { createTask, getTasks, getTaskById };
+const getRandomTask = async (req, res) => {
+  try {
+    const tasks = await Task.aggregate([
+      {
+        $match: {
+          isActive: true,
+          $expr: {
+            $lt: ["$unlocksUsed", "$unlocksAvailable"],
+          },
+        },
+      },
+      {
+        $sample: {
+          size: 1,
+        },
+      },
+    ]);
+
+    if (tasks.length === 0) {
+      return res.status(404).json({
+        message: "No tasks available",
+      });
+    }
+
+    return res.status(200).json(tasks[0]);
+  } catch (error) {
+    console.error("GET RANDOM TASK ERROR:", error);
+
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { createTask, getTasks, getTaskById, getRandomTask };

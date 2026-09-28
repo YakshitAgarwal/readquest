@@ -65,7 +65,11 @@ function App() {
 
         <Route
           path="/tasks/:id"
-          element={<TaskPage user={user} setUser={setUser} />}
+          element={
+            <CompanyRoute>
+              <TaskPage user={user} setUser={setUser} />
+            </CompanyRoute>
+          }
         />
 
         <Route path="/faq" element={<FAQ user={user} setUser={setUser} />} />
